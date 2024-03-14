@@ -1,5 +1,5 @@
 import { Entity } from '../entities/entity';
-import { RepositoryInterface } from './repository-contract';
+import { RepositoryInterface } from './repository-contracts';
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -7,7 +7,7 @@ export type SearchProps<Filter = string> = {
   page?: number;
   perPage?: number;
   sort?: string | null;
-  sortDirection?: SortDirection | null;
+  sortDir?: SortDirection | null;
   filter?: Filter | null;
 };
 
@@ -18,12 +18,12 @@ export class SearchParams {
   protected _sortDir: SortDirection | null;
   protected _filter: string | null;
 
-  constructor(props: SearchProps) {
-    this._page = props.page;
-    this._perPage = props.perPage;
-    this._sort = props.sort;
-    this._sortDir = props.sortDirection;
-    this._filter = props.filter;
+  constructor(props: SearchProps = {}) {
+    this.page = props.page;
+    this.perPage = props.perPage;
+    this.sort = props.sort;
+    this.sortDir = props.sortDir;
+    this.filter = props.filter;
   }
 
   get page() {
@@ -43,7 +43,7 @@ export class SearchParams {
   }
 
   private set perPage(value: number) {
-    let _perPage = +value;
+    let _perPage = value === (true as any) ? this._perPage : +value;
     if (
       Number.isNaN(_perPage) ||
       _perPage <= 0 ||
@@ -67,7 +67,7 @@ export class SearchParams {
     return this._sortDir;
   }
 
-  private set sortDirection(value: SortDirection | null) {
+  private set sortDir(value: SortDirection | null) {
     if (!this.sort) {
       this._sortDir = null;
       return;
