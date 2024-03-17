@@ -1,4 +1,7 @@
-import { SearchParams } from '../../searchable-repository-contracts';
+import {
+  SearchParams,
+  SearhResult,
+} from '../../searchable-repository-contracts';
 
 describe('Searchable Repository unit tests', () => {
   describe('SearchParams tests', () => {
@@ -45,6 +48,160 @@ describe('Searchable Repository unit tests', () => {
           i.expected,
         );
       });
+    });
+
+    it('sort prop', () => {
+      const sut = new SearchParams();
+      expect(sut.sort).toBeNull();
+
+      const _ = [
+        { sort: null, expected: null },
+        { sort: undefined, expected: null },
+        { sort: '', expected: null },
+        { sort: 'test', expected: 'test' },
+        { sort: 0, expected: '0' },
+        { sort: -1, expected: '-1' },
+        { sort: 5.5, expected: '5.5' },
+        { sort: true, expected: 'true' },
+        { sort: false, expected: 'false' },
+        { sort: {}, expected: '[object Object]' },
+        { sort: 1, expected: '1' },
+        { sort: 2, expected: '2' },
+        { sort: 25 as any, expected: '25' },
+      ].forEach((i) => {
+        expect(new SearchParams({ sort: i.sort }).sort).toEqual(i.expected);
+      });
+    });
+
+    it('sortDirection prop', () => {
+      let sut = new SearchParams();
+      expect(sut.sortDirection).toBeNull();
+
+      sut = new SearchParams({ sort: null });
+      expect(sut.sortDirection).toBeNull();
+
+      sut = new SearchParams({ sort: undefined });
+      expect(sut.sortDirection).toBeNull();
+
+      sut = new SearchParams({ sort: '' });
+      expect(sut.sortDirection).toBeNull();
+
+      const _ = [
+        { sortDirection: null, expected: 'desc' },
+        { sortDirection: undefined, expected: 'desc' },
+        { sortDirection: '', expected: 'desc' },
+        { sortDirection: 'test', expected: 'desc' },
+        { sortDirection: true, expected: 'desc' },
+        { sortDirection: false, expected: 'desc' },
+        { sortDirection: {}, expected: 'desc' },
+        { sortDirection: 1, expected: 'desc' },
+        { sortDirection: 2, expected: 'desc' },
+        { sortDirection: 25 as any, expected: 'desc' },
+        { sortDirection: 'asc', expected: 'asc' },
+        { sortDirection: 'desc', expected: 'desc' },
+        { sortDirection: 'ASC', expected: 'asc' },
+        { sortDirection: 'DESC', expected: 'desc' },
+      ].forEach((i) => {
+        expect(
+          new SearchParams({ sort: 'fakeSort', sortDir: i.sortDirection })
+            .sortDirection,
+        ).toEqual(i.expected);
+      });
+    });
+
+    it('filter prop', () => {
+      const sut = new SearchParams();
+      expect(sut.filter).toBeNull();
+
+      const _ = [
+        { filter: null, expected: null },
+        { filter: undefined, expected: null },
+        { filter: '', expected: null },
+        { filter: 'test', expected: 'test' },
+        { filter: 0, expected: '0' },
+        { filter: -1, expected: '-1' },
+        { filter: 5.5, expected: '5.5' },
+        { filter: true, expected: 'true' },
+        { filter: false, expected: 'false' },
+        { filter: {}, expected: '[object Object]' },
+        { filter: 1, expected: '1' },
+        { filter: 2, expected: '2' },
+        { filter: 25 as any, expected: '25' },
+      ].forEach((i) => {
+        expect(new SearchParams({ filter: i.filter }).filter).toEqual(
+          i.expected,
+        );
+      });
+    });
+  });
+
+  describe('Search Result tests', () => {
+    it('constructor props', () => {
+      let sut = new SearhResult({
+        items: ['test1', 'test2', 'test3', 'test4'] as any,
+        total: 4,
+        currentPage: 1,
+        perPage: 4,
+        sort: null,
+        sortDir: null,
+        filter: null,
+      });
+
+      expect(sut.toJSON()).toStrictEqual({
+        items: ['test1', 'test2', 'test3', 'test4'],
+        total: 4,
+        currentPage: 1,
+        perPage: 4,
+        lastPage: 1,
+        sort: null,
+        sortDir: null,
+        filter: null,
+      });
+
+      sut = new SearhResult({
+        items: ['test1', 'test2', 'test3', 'test4'] as any,
+        total: 4,
+        currentPage: 1,
+        perPage: 4,
+        sort: 'test',
+        sortDir: 'asc',
+        filter: 'testFilter',
+      });
+
+      expect(sut.toJSON()).toStrictEqual({
+        items: ['test1', 'test2', 'test3', 'test4'],
+        total: 4,
+        currentPage: 1,
+        perPage: 4,
+        lastPage: 1,
+        sort: 'test',
+        sortDir: 'asc',
+        filter: 'testFilter',
+      });
+
+      sut = new SearhResult({
+        items: ['test1', 'test2', 'test3', 'test4'] as any,
+        total: 4,
+        currentPage: 1,
+        perPage: 10,
+        sort: 'test',
+        sortDir: 'asc',
+        filter: 'testFilter',
+      });
+
+      expect(sut.lastPage).toBe(1);
+
+      sut = new SearhResult({
+        items: ['test1', 'test2', 'test3', 'test4'] as any,
+        total: 54,
+        currentPage: 1,
+        perPage: 10,
+        sort: 'test',
+        sortDir: 'asc',
+        filter: 'testFilter',
+      });
+
+      expect(sut.lastPage).toBe(6);
     });
   });
 });
