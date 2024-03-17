@@ -96,7 +96,7 @@ export class SearchParams {
   }
 }
 
-export class SearhResult<E extends Entity, Filter = string> {
+export class SearchResult<E extends Entity, Filter = string> {
   readonly items: E[];
   readonly total: number;
   readonly currentPage: number;
@@ -135,7 +135,8 @@ export interface SearchableRepositoryInterface<
   E extends Entity,
   Filter = string,
   SearchInput = SearchParams,
-  SearchOutput = SearhResult<E, Filter>,
+  SearchOutput = SearchResult<E, Filter>,
 > extends RepositoryInterface<E> {
+  sortableFields: string[];
   search(props: SearchInput): Promise<SearchOutput>;
 }
