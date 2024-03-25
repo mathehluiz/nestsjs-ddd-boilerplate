@@ -26,7 +26,7 @@ describe('SignUpUseCase unit tests', () => {
     expect(spyInsert).toHaveBeenCalledTimes(1);
   });
 
-  it('Should not be able to register with same email twice', async () => {
+  it('Should not be able to register with same email', async () => {
     const props = userDataBuilder({ email: 'a@a.com' });
     await sut.execute(props);
 

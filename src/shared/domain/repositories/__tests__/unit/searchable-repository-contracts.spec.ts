@@ -1,6 +1,6 @@
 import {
   SearchParams,
-  SearhResult,
+  SearchResult,
 } from '../../searchable-repository-contracts';
 
 describe('Searchable Repository unit tests', () => {
@@ -137,7 +137,7 @@ describe('Searchable Repository unit tests', () => {
 
   describe('Search Result tests', () => {
     it('constructor props', () => {
-      let sut = new SearhResult({
+      let sut = new SearchResult({
         items: ['test1', 'test2', 'test3', 'test4'] as any,
         total: 4,
         currentPage: 1,
@@ -158,7 +158,7 @@ describe('Searchable Repository unit tests', () => {
         filter: null,
       });
 
-      sut = new SearhResult({
+      sut = new SearchResult({
         items: ['test1', 'test2', 'test3', 'test4'] as any,
         total: 4,
         currentPage: 1,
@@ -179,7 +179,7 @@ describe('Searchable Repository unit tests', () => {
         filter: 'testFilter',
       });
 
-      sut = new SearhResult({
+      sut = new SearchResult({
         items: ['test1', 'test2', 'test3', 'test4'] as any,
         total: 4,
         currentPage: 1,
@@ -191,7 +191,7 @@ describe('Searchable Repository unit tests', () => {
 
       expect(sut.lastPage).toBe(1);
 
-      sut = new SearhResult({
+      sut = new SearchResult({
         items: ['test1', 'test2', 'test3', 'test4'] as any,
         total: 54,
         currentPage: 1,
