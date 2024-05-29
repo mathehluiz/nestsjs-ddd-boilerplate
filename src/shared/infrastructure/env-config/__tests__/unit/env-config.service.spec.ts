@@ -31,6 +31,6 @@ describe('EnvConfigService unit tests', () => {
   });
 
   it('should return the variable JWT_EXPIRES_IN', () => {
-    expect(sut.getJwtExpiresInSeconds()).toBe(86400);
+    expect(sut.getJwtExpiresInSeconds()).toBe('86400');
   });
 });

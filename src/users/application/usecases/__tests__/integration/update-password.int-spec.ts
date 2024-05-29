@@ -62,7 +62,7 @@ describe('UpdatePasswordUseCase integration tests', () => {
         password: 'NewPassword',
       }),
     ).rejects.toThrow(
-      new InvalidPasswordError('Old password and new password is required'),
+      new InvalidPasswordError('Old and new password are required'),
     );
   });
 
@@ -79,7 +79,7 @@ describe('UpdatePasswordUseCase integration tests', () => {
         password: '',
       }),
     ).rejects.toThrow(
-      new InvalidPasswordError('Old password and new password is required'),
+      new InvalidPasswordError('Old and new password are required'),
     );
   });
 

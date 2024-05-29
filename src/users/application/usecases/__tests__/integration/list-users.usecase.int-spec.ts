@@ -53,7 +53,7 @@ describe('ListUsersUseCase integration tests', () => {
       items: entities.reverse().map((item) => item.toJSON()),
       total: 3,
       currentPage: 1,
-      perPage: 15,
+      perPage: 10,
       lastPage: 1,
     });
   });
