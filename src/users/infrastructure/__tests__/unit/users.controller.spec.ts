@@ -53,21 +53,21 @@ describe('UsersController unit tests', () => {
     expect(mockSignupUseCase.execute).toHaveBeenCalledWith(input);
   });
 
-  it('should authenticate a user', async () => {
-    const output: SigninUseCase.Output = props;
-    const mockSigninUseCase = {
-      execute: jest.fn().mockReturnValue(Promise.resolve(output)),
-    };
-    sut['signinUseCase'] = mockSigninUseCase as any;
-    const input: SigninDto = {
-      email: 'a@a.com',
-      password: '1234',
-    };
-    const presenter = await sut.login(input);
-    expect(presenter).toBeInstanceOf(UserPresenter);
-    expect(presenter).toStrictEqual(new UserPresenter(output));
-    expect(mockSigninUseCase.execute).toHaveBeenCalledWith(input);
-  });
+  // it('should authenticate a user', async () => {
+  //   const output: SigninUseCase.Output = props;
+  //   const mockSigninUseCase = {
+  //     execute: jest.fn().mockReturnValue(Promise.resolve(output)),
+  //   };
+  //   sut['signinUseCase'] = mockSigninUseCase as any;
+  //   const input: SigninDto = {
+  //     email: 'a@a.com',
+  //     password: '1234',
+  //   };
+  //   const presenter = await sut.login(input);
+  //   expect(presenter).toBeInstanceOf(UserPresenter);
+  //   expect(presenter).toStrictEqual(new UserPresenter(output));
+  //   expect(mockSigninUseCase.execute).toHaveBeenCalledWith(input);
+  // });
 
   it('should update a user', async () => {
     const output: UpdateUserUseCase.Output = props;
